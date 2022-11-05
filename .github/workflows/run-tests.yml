@@ -13,20 +13,14 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     env:
-      ENVIRONMENT: ${{ github.event.inputs.environment }}
+      ENVIRONMENT: ${{ github.event.inputs.environment }}${{ github.event.client_payload.github.event.inputs.environment }}
     steps:
-      - name: Set Test Type For Happy and Preview Environment
-        if: github.event_name == 'repository_dispatch' && github.event.action == 'happy-turkey-run' || env.TYPE == 'happy'
-        run: |
-          echo "PARAMS= --grep @happy  --grep-invert @unsatisfactory" >> $GITHUB_ENV
-          echo "HEADERS_CHECKS=false" >> $GITHUB_ENV 
-
       - name: Run Playwright tests
         run: |
           echo "Environment: $ENVIRONMENT"
-          echo "TYPE = $TYPE"
           echo "The github event is: ${{ github.event_name }}"
           echo "Run Test Here"
+          echo "Below steps in action provide what you have access to use in your scripts as needed"
       - name: Dump GitHub context
         id: github_context_step
         run: echo '${{ toJSON(github) }}'
@@ -40,5 +34,3 @@ jobs:
         run: echo '${{ toJSON(strategy) }}'
       - name: Dump matrix context
         run: echo '${{ toJSON(matrix) }}'
-      # - name: Dump client_payload context
-        # run: echo '${{ toJSON(client_payload) }}'
