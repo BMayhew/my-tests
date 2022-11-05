@@ -13,7 +13,7 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     env:
-      ENVIRONMENT: ${{ github.event.inputs.environment }}${{ github.event.client_payload. }}
+      ENVIRONMENT: ${{ github.event.inputs.environment }}
     steps:
       - name: Set Test Type For Happy and Preview Environment
         if: github.event_name == 'repository_dispatch' && github.event.action == 'happy-turkey-run' || env.TYPE == 'happy'
